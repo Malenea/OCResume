@@ -25,6 +25,8 @@
 		FA428C48243CCEF400803278 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA428C47243CCEF400803278 /* ViewController.swift */; };
 		FA428C4A243CCF8900803278 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA428C49243CCF8900803278 /* ViewModel.swift */; };
 		FA428C4D243CDCE800803278 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA428C4C243CDCE800803278 /* ActionButton.swift */; };
+		FA610118243E687D00860A29 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA610117243E687D00860A29 /* DataHandler.swift */; };
+		FA61011A243E68C400860A29 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = FA610119243E68C400860A29 /* data.json */; };
 		FAA3E424243DD1360016339E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3E423243DD1360016339E /* Globals.swift */; };
 		FAE1FEE9243D508500B7FDE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE1FEE8243D508500B7FDE7 /* LaunchScreen.storyboard */; };
 		FAE1FEEC243D564C00B7FDE7 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = FAE1FEEB243D564C00B7FDE7 /* config.json */; };
@@ -83,6 +85,8 @@
 		FA428C47243CCEF400803278 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FA428C49243CCF8900803278 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		FA428C4C243CDCE800803278 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		FA610117243E687D00860A29 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		FA610119243E68C400860A29 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		FAA3E423243DD1360016339E /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		FAE1FEE8243D508500B7FDE7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAE1FEEB243D564C00B7FDE7 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 				FA36778E243CBEE200F69B97 /* Storyboards and xibs */,
 				FA36778F243CBEF200F69B97 /* Assets */,
 				FAE1FEEA243D55D000B7FDE7 /* Config */,
+				FA610116243E686A00860A29 /* Data */,
 				FA36776C243CBECD00F69B97 /* Info.plist */,
 				FA367764243CBEC700F69B97 /* OCResume.xcdatamodeld */,
 			);
@@ -276,6 +281,15 @@
 				FA367792243CBF9E00F69B97 /* Coordinator.swift */,
 			);
 			path = "Protocols and base";
+			sourceTree = "<group>";
+		};
+		FA610116243E686A00860A29 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FA610117243E687D00860A29 /* DataHandler.swift */,
+				FA610119243E68C400860A29 /* data.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		FAE1FEEA243D55D000B7FDE7 /* Config */ = {
@@ -424,6 +438,7 @@
 				FAE1FEE9243D508500B7FDE7 /* LaunchScreen.storyboard in Resources */,
 				FA367768243CBECD00F69B97 /* Assets.xcassets in Resources */,
 				FAE1FEEC243D564C00B7FDE7 /* config.json in Resources */,
+				FA61011A243E68C400860A29 /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +570,7 @@
 				FA367797243CBFB500F69B97 /* MainViewController.swift in Sources */,
 				FA367796243CBFB500F69B97 /* RootCoordinator.swift in Sources */,
 				FA207A2F243CDE73004CD143 /* Pulsator.swift in Sources */,
+				FA610118243E687D00860A29 /* DataHandler.swift in Sources */,
 				FAF04872243CDF1200362C83 /* ViewsAnimations.swift in Sources */,
 				FA428C4D243CDCE800803278 /* ActionButton.swift in Sources */,
 				FAA3E424243DD1360016339E /* Globals.swift in Sources */,
