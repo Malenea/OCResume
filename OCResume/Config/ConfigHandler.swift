@@ -61,9 +61,14 @@ extension ConfigHandler {
             let mainMenuButtonsOrder = config["mainMenuSequence"] as? [String],
             let mainMenuButtons = config["mainMenuButtons"] as? [String: String] else { return [] }
         var mainMenuButtonsArray: [MainMenuButton] = []
+        var colorIndex = 0
+        let colorArray = UIColor.getPastelColors()
+        let colorCount = colorArray.count - 1
         for key in mainMenuButtonsOrder {
             if let value = mainMenuButtons[key] {
-                mainMenuButtonsArray.append(MainMenuButton(id: key, title: value))
+                let type = MainState(rawValue: key)
+                mainMenuButtonsArray.append(MainMenuButton(id: key, title: value, color: colorArray[colorIndex], type: type))
+                colorIndex = colorIndex >= colorCount ? 0 : colorIndex + 1
             }
         }
         return mainMenuButtonsArray
