@@ -1,0 +1,14 @@
+{
+
+    "presentationTitle": "Mon titre est beaucoup trop long",
+    "presentationInstructions": "Press anywhere to continue",
+
+    "mainMenuSequence": ["home", "experiences", "studies", "profile"],
+    "mainMenuButtons": {
+        "home": "Home",
+        "experiences": "Experiences",
+        "studies": "Studies",
+        "profile": "Profile"
+    }
+
+}

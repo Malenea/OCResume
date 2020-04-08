@@ -1,0 +1,18 @@
+PODS:
+  - CocoaLumberjack/Core (3.6.1)
+  - CocoaLumberjack/Swift (3.6.1):
+    - CocoaLumberjack/Core
+
+DEPENDENCIES:
+  - CocoaLumberjack/Swift
+
+SPEC REPOS:
+  trunk:
+    - CocoaLumberjack
+
+SPEC CHECKSUMS:
+  CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
+
+PODFILE CHECKSUM: db040ea47561ef9ae04d9830c2ea2d9c6ed671ff
+
+COCOAPODS: 1.9.0
