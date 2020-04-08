@@ -103,7 +103,7 @@ public extension UIView {
         }
     }
 
-    func createPulsator(point: CGPoint, width: CGFloat, color: CGColor, isSolid: Bool = false, duration: TimeInterval = 0.5) {
+    func createPulsator(point: CGPoint, width: CGFloat, color: CGColor, isSolid: Bool = false, duration: TimeInterval = 0.5, completion: (()->())? = nil) {
         let pulsator = Pulsator()
         pulsator.position = CGPoint(x: point.x, y: point.y)
         pulsator.backgroundColor = color
@@ -116,6 +116,11 @@ public extension UIView {
         pulsator.start(isSolid: isSolid)
 
         layer.addSublayer(pulsator)
+
+        // The - 0.25 is to avoid any clipping in animation transition
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration - 0.25) {
+            completion?()
+        }
     }
 
 }

@@ -146,7 +146,6 @@ private extension RootPresentationViewController {
 
     // Setting each view's layout
     func setupPulsatorContainerViewLayout() {
-        // Creating view's constraints
         pulsatorContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         pulsatorContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         pulsatorContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -154,14 +153,12 @@ private extension RootPresentationViewController {
     }
 
     func setupTitleLabelLayout() {
-        // Creating view's constraints
         titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
     }
 
     func setupInstructionsLabelLayout() {
-        // Creating view's constraints
         let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + 16.0
         instructionsLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomPadding).isActive = true
         instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -169,7 +166,6 @@ private extension RootPresentationViewController {
     }
 
     func setupDarkModeButtonLayout() {
-        // Creating view's constraints
         let topPadding = UIApplication.shared.statusBarFrame.height + 16.0
         darkModeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding).isActive = true
         darkModeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
@@ -206,8 +202,8 @@ private extension RootPresentationViewController {
 extension RootPresentationViewController {
 
     func createRandomColor(with index: Int? = nil) -> UIColor {
-        let colorArray: [UIColor] = [.red, .blue, .green, .white, .yellow, .cyan]
-        let randomColorIndex = Int.random(in: 0...5)
+        let colorArray: [UIColor] = UIColor.getPastelColors()
+        let randomColorIndex = Int.random(in: 0...3)
         if let previousRandomColorIndex = previousRandomColorIndex, randomColorIndex == previousRandomColorIndex {
             return createRandomColor(with: randomColorIndex)
         }

@@ -6,16 +6,20 @@
 //  Copyright © 2020 OlivierConan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct MainMenuButton {
 
     var id: String
     var title: String
+    var color: UIColor
+    var type: MainState?
 
-    init(id: String, title: String) {
+    init(id: String, title: String, color: UIColor, type: MainState?) {
         self.id = id
         self.title = title
+        self.color = color
+        self.type = type
     }
 
 }

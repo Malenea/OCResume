@@ -3,12 +3,11 @@
     "presentationTitle": "Mon titre est beaucoup trop long",
     "presentationInstructions": "Press anywhere to continue",
 
-    "mainMenuSequence": ["home", "experiences", "studies", "profile"],
+    "mainMenuSequence": ["home", "profile", "stats"],
     "mainMenuButtons": {
         "home": "Home",
-        "experiences": "Experiences",
-        "studies": "Studies",
-        "profile": "Profile"
+        "profile": "Profile",
+        "stats": "Stats"
     }
 
 }
