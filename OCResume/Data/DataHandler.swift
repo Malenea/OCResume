@@ -20,7 +20,7 @@ class DataHandler {
     // If not fetching from a BE, use default config from json
     func getDefaultData() -> [String: Any]? {
         do {
-            if let file = Bundle.main.url(forResource: "data", withExtension: "json") {
+            if let file = Bundle.main.url(forResource: "data_\(locale)", withExtension: "json") {
                 let data = try Data(contentsOf: file)
                 let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers])
                 if let object = json as? [String: Any] {

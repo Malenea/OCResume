@@ -12,13 +12,13 @@ import UIKit
 // MARK: Overrides and inits
 final class RootPresentationViewController: BaseViewController {
 
-    // View model
+    // Coordinator and view model
+    weak var coordinator: RootCoordinator?
     private var rootPresentationViewModel: RootPresentationViewModel? {
         return viewModel as? RootPresentationViewModel
     }
 
     // Views and components
-    private var darkModeButton: UIButton!
     private var timer: Timer?
     private var previousRandomColorIndex: Int?
     private var pulsatorContainerView: UIView!
@@ -62,14 +62,12 @@ private extension RootPresentationViewController {
         setupPulsatorContainerView()
         setupTitleLabel()
         setupInstructionsLabel()
-        setupDarkModeButton()
     }
 
     func setupLayout() {
         setupPulsatorContainerViewLayout()
         setupTitleLabelLayout()
         setupInstructionsLabelLayout()
-        setupDarkModeButtonLayout()
     }
 
     func setupGestures() {
@@ -122,21 +120,6 @@ private extension RootPresentationViewController {
         instructionsLabel.alpha = 0.0
     }
 
-    func setupDarkModeButton() {
-        // Creating view
-        darkModeButton = UIButton()
-        darkModeButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(darkModeButton)
-
-        // Setting the alpha to 0 for initial animation
-        darkModeButton.alpha = 0.0
-
-        //Setting view properties
-        darkModeButton.layer.cornerRadius = 24.0
-        darkModeButton.backgroundColor = .getComponentColor()
-        darkModeButton.addTarget(self, action: #selector(tappedOnButton), for: .touchUpInside)
-    }
-
     func setupTap() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedOnScreen))
         tapGesture.numberOfTouchesRequired = 1
@@ -162,28 +145,6 @@ private extension RootPresentationViewController {
         instructionsLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomPadding).isActive = true
         instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         instructionsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    }
-
-    func setupDarkModeButtonLayout() {
-        let topPadding = UIApplication.shared.statusBarFrame.height + 16.0
-        darkModeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding).isActive = true
-        darkModeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
-        darkModeButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
-        darkModeButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
-    }
-
-    // setting gestures and buttons methods
-    @objc func tappedOnButton(_ sender: UIButton) {
-        let point = darkModeButton.center
-        darkModeButton.flipBackgroundColor(to: .getBackgroundColor()) { [weak self] _ in
-            self?.activatedDarkMode(from: point, completion: {
-                guard let self = self else { return }
-                UIView.transition(with: self.titleLabel, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                    self.titleLabel.textColor = .getComponentColor()
-                    self.instructionsLabel.textColor = .getComponentColor()
-                })
-            })
-        }
     }
 
     @objc func tappedOnScreen(_ sender: UITapGestureRecognizer) {
@@ -216,7 +177,6 @@ extension RootPresentationViewController {
             // Fade components in
             self?.titleLabel.fadeIn(with: 0.5)
             self?.instructionsLabel.fadeIn(with: 0.5)
-            self?.darkModeButton.fadeIn(with: 0.5)
 
             // Add gestures
             self?.setupGestures()

@@ -1,0 +1,15 @@
+{
+
+    "settingsTitle": "Settings",
+
+    "presentationTitle": "My title is way too long",
+    "presentationInstructions": "Press anywhere to continue",
+
+    "mainMenuSequence": ["home", "profile", "stats"],
+    "mainMenuButtons": {
+        "home": "Home",
+        "profile": "Profile",
+        "stats": "Stats"
+    }
+
+}

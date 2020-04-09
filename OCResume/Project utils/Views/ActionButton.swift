@@ -107,7 +107,7 @@ public class ActionButton: UIView {
         super.layoutSubviews()
 
         clipsToBounds = true
-        layer.cornerRadius = bounds.height / 2
+        layer.cornerRadius = 24.0
     }
 
 }
