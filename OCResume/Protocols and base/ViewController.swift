@@ -18,8 +18,9 @@ protocol BaseViewControllerDarkModeHandler {
 
 class BaseViewController: UIViewController {
 
-    // Ref to the base view model to be cast accordingly to the inherited vc
-    internal let viewModel: BaseViewModel
+    // Coordinator and view model
+    weak var coordinator: RootCoordinator?
+    let viewModel: BaseViewModel
 
     // Ref to native components of the base view
     var backgroundColor: UIColor = .getBackgroundColor()

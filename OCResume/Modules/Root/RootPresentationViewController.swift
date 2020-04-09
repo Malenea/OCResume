@@ -12,8 +12,7 @@ import UIKit
 // MARK: Overrides and inits
 final class RootPresentationViewController: BaseViewController {
 
-    // Coordinator and view model
-    weak var coordinator: RootCoordinator?
+    // View model
     private var rootPresentationViewModel: RootPresentationViewModel? {
         return viewModel as? RootPresentationViewModel
     }

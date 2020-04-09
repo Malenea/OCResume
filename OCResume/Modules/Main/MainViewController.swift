@@ -21,8 +21,7 @@ enum MainState: String {
 // MARK: Overrides and inits
 class MainViewController: BaseViewController {
 
-    // Coordinator and view model
-    weak var coordinator: RootCoordinator?
+    // View model
     private var mainViewModel: MainViewModel? {
         return viewModel as? MainViewModel
     }
@@ -87,6 +86,7 @@ extension MainViewController {
         setupContainerView()
         setupBottomMenuViewContainerView()
         setupBottomMenuView()
+        setupSettingsButton()
     }
 
     // Setup views' layouts
@@ -94,6 +94,7 @@ extension MainViewController {
         setupContainerViewLayout()
         setupBottomMenuViewContainerViewLayout()
         setupBottomMenuViewLayout()
+        setupSettingsButtonLayout()
     }
 
     // Setting views
@@ -140,6 +141,18 @@ extension MainViewController {
         }
     }
 
+    func setupSettingsButton() {
+        // Creating view
+        settingsButton = UIButton()
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(settingsButton)
+
+        // Setting view properties
+        settingsButton.layer.cornerRadius = 24.0
+        settingsButton.backgroundColor = .getComponentColor()
+        settingsButton.addTarget(self, action: #selector(tappedOnButton), for: .touchUpInside)
+    }
+
     // Setting each view's layout
     func setupContainerViewLayout() {
         containerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -162,6 +175,19 @@ extension MainViewController {
         bottomMenuView.bottomAnchor.constraint(equalTo: bottomMenuViewContainerView.bottomAnchor, constant: -bottomPadding).isActive = true
         bottomMenuView.leadingAnchor.constraint(equalTo: bottomMenuViewContainerView.leadingAnchor, constant: 16.0).isActive = true
         bottomMenuView.trailingAnchor.constraint(equalTo: bottomMenuViewContainerView.trailingAnchor, constant: -16.0).isActive = true
+    }
+
+    func setupSettingsButtonLayout() {
+        let topPadding = UIApplication.shared.statusBarFrame.height + 16.0
+        settingsButton.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding).isActive = true
+        settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+        settingsButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
+        settingsButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
+    }
+
+    // setting gestures and buttons methods
+    @objc func tappedOnButton(_ sender: UIButton) {
+        coordinator?.moveToSettings()
     }
 
 }
