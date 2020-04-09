@@ -5,11 +5,11 @@
     "presentationTitle": "Mon titre est beaucoup trop long",
     "presentationInstructions": "Appuyez pour continuer",
 
-    "mainMenuSequence": ["home", "profile", "stats"],
+    "mainMenuSequence": ["home", "profile", "perks"],
     "mainMenuButtons": {
         "home": "Accueil",
         "profile": "Profile",
-        "stats": "Stats"
+        "perks": "Perks"
     }
 
 }

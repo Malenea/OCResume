@@ -86,6 +86,10 @@ public extension UIColor {
         return darkMode ? primaryDark : primaryLight
     }
 
+    class func getSecondary() -> UIColor {
+        return darkMode ? primaryLight : primaryDark
+    }
+
     // Component color
     class var componentColorDark: UIColor {
         return offWhite

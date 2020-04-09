@@ -14,7 +14,7 @@ enum MainState: String {
 
     case home
     case profile
-    case stats
+    case perks
     
 }
 
@@ -32,10 +32,12 @@ class MainViewController: BaseViewController {
     private var isAnimating: Bool = false
 
     // Views and components
+    private var pulsatorView: UIView!
+    private var containerView: UIView!
+    private var titleLabel: UILabel!
     private var settingsButton: UIButton!
     private var bottomMenuViewContainerView: UIView!
     private var bottomMenuView: UIStackView!
-    private var containerView: UIView!
 
     // Inits
     override init(nibName: String? = nil, bundle: Bundle? = nil, baseViewModel: BaseViewModel) {
@@ -79,13 +81,15 @@ extension MainViewController {
                 firstButton.actionButtonBorderColor = firstMainMenuItem.color
             }
             currentState = firstMainMenuItem.type
-            containerView.backgroundColor = firstMainMenuItem.color
+            pulsatorView.backgroundColor = firstMainMenuItem.color
         }
     }
 
     // Setup of additional views
     func setupViews() {
+        setupPulsatorView()
         setupContainerView()
+        setupTitleLabel()
         setupBottomMenuViewContainerView()
         setupBottomMenuView()
         setupSettingsButton()
@@ -93,18 +97,43 @@ extension MainViewController {
 
     // Setup views' layouts
     func setupLayout() {
-        setupContainerViewLayout()
+        setupPulsatorViewLayout()
         setupBottomMenuViewContainerViewLayout()
+        setupContainerViewLayout()
+        setupTitleLabelLayout()
         setupBottomMenuViewLayout()
         setupSettingsButtonLayout()
     }
 
     // Setting views
+    func setupPulsatorView() {
+        // Creating view
+        pulsatorView = UIView()
+        pulsatorView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(pulsatorView)
+    }
+
     func setupContainerView() {
         // Creating view
         containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
+    }
+
+    func setupTitleLabel() {
+        // Creating view
+        titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(titleLabel)
+
+        // Setting view properties
+        if let viewModel = mainViewModel, let item = viewModel.mainMenuButtons.first {
+            titleLabel.text = item.title
+        }
+        titleLabel.font = .title
+        titleLabel.textColor = .getPrimary()
+        titleLabel.textAlignment = .left
+        titleLabel.numberOfLines = 0
     }
 
     func setupBottomMenuViewContainerView() {
@@ -157,11 +186,11 @@ extension MainViewController {
     }
 
     // Setting each view's layout
-    func setupContainerViewLayout() {
-        containerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    func setupPulsatorViewLayout() {
+        pulsatorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        pulsatorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        pulsatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        pulsatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     func setupBottomMenuViewContainerViewLayout() {
@@ -170,6 +199,20 @@ extension MainViewController {
         bottomMenuViewContainerView.heightAnchor.constraint(equalToConstant: 64.0 + bottomPadding).isActive = true
         bottomMenuViewContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottomMenuViewContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
+    func setupContainerViewLayout() {
+        let topPadding = UIApplication.shared.statusBarFrame.height
+        containerView.topAnchor.constraint(equalTo: view.topAnchor,constant: topPadding).isActive = true
+        containerView.bottomAnchor.constraint(equalTo: bottomMenuViewContainerView.topAnchor).isActive = true
+        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
+    func setupTitleLabelLayout() {
+        titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16.0).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16.0).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16.0).isActive = true
     }
 
     func setupBottomMenuViewLayout() {
@@ -214,12 +257,16 @@ extension MainViewController: ActionButtonDelegate {
         // Reset the buttons borders before assigning the new one
         resetButtons()
 
-        let buttonY = containerView.frame.height - bottomMenuViewContainerView.frame.height + actionButton.center.y
+        UIView.transition(with: titleLabel, duration: 0.5, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.titleLabel.text = item.title
+        }, completion: nil)
+
+        let buttonY = pulsatorView.frame.height - bottomMenuViewContainerView.frame.height + actionButton.center.y
         let point = CGPoint(x: actionButton.center.x, y: buttonY)
-        containerView.createPulsator(point: point, width: view.frame.height, color: item.color.cgColor, isSolid: true) { [weak self] in
+        pulsatorView.createPulsator(point: point, width: view.frame.height, color: item.color.cgColor, isSolid: true) { [weak self] in
             guard let self = self else { return }
             self.currentState = type
-            self.containerView.backgroundColor = item.color
+            self.pulsatorView.backgroundColor = item.color
             actionButton.actionButtonBorderColor = item.color
             self.isAnimating = false
         }

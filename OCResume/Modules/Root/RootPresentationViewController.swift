@@ -22,6 +22,7 @@ final class RootPresentationViewController: BaseViewController {
     private var timer: Timer?
     private var previousRandomColorIndex: Int?
     private var pulsatorContainerView: UIView!
+    private var iconImageView: UIImageView!
     private var titleLabel: UILabel!
     private var instructionsLabel: UILabel!
 
@@ -60,12 +61,14 @@ private extension RootPresentationViewController {
     // Setup of additional views
     func setupViews() {
         setupPulsatorContainerView()
+        setupIconImageView()
         setupTitleLabel()
         setupInstructionsLabel()
     }
 
     func setupLayout() {
         setupPulsatorContainerViewLayout()
+        setupIconImageViewLayout()
         setupTitleLabelLayout()
         setupInstructionsLabelLayout()
     }
@@ -80,6 +83,16 @@ private extension RootPresentationViewController {
         pulsatorContainerView = UIView()
         pulsatorContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(pulsatorContainerView)
+    }
+
+    func setupIconImageView() {
+        // Creating view
+        iconImageView = UIImageView()
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(iconImageView)
+
+        // Setting view properties
+        iconImageView.image = UIImage(named: "ic_appIcon")
     }
 
     func setupTitleLabel() {
@@ -134,6 +147,13 @@ private extension RootPresentationViewController {
         pulsatorContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
+    func setupIconImageViewLayout() {
+        iconImageView.heightAnchor.constraint(equalToConstant: 256.0).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: 256.0).isActive = true
+        iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+
     func setupTitleLabelLayout() {
         titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
@@ -174,12 +194,15 @@ extension RootPresentationViewController {
     func startAnimating() {
         // Initial title and instructions labels animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            // Fade components in
-            self?.titleLabel.fadeIn(with: 0.5)
-            self?.instructionsLabel.fadeIn(with: 0.5)
+            guard let self = self else { return }
+            self.iconImageView.fadeOut(with: 0.5) { _ in
+                // Fade components in
+                self.titleLabel.fadeIn(with: 0.5)
+                self.instructionsLabel.fadeIn(with: 0.5)
 
-            // Add gestures
-            self?.setupGestures()
+                // Add gestures
+                self.setupGestures()
+            }
         }
 
         // If timer exists we invalidate it
