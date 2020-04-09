@@ -19,12 +19,24 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenColor" translatesAutoresizingMaskIntoConstraints="NO" id="4VW-Gr-7Z0">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_appIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YoY-bO-f2S">
+                                <rect key="frame" x="79" y="320" width="256" height="256"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="256" id="3aj-ou-ALy"/>
+                                    <constraint firstAttribute="width" constant="256" id="LAj-hC-FWF"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4VW-Gr-7Z0" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="HXT-mW-mI5"/>
                             <constraint firstItem="4VW-Gr-7Z0" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Loo-c8-BdV"/>
                             <constraint firstItem="4VW-Gr-7Z0" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="cVS-6J-cGq"/>
+                            <constraint firstItem="YoY-bO-f2S" firstAttribute="centerX" secondItem="4VW-Gr-7Z0" secondAttribute="centerX" id="o6R-73-gSf"/>
+                            <constraint firstItem="YoY-bO-f2S" firstAttribute="centerY" secondItem="4VW-Gr-7Z0" secondAttribute="centerY" id="ukT-Gh-2r7"/>
                             <constraint firstAttribute="bottom" secondItem="4VW-Gr-7Z0" secondAttribute="bottom" id="zv0-Fl-Gn9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
@@ -37,5 +49,6 @@
     </scenes>
     <resources>
         <image name="LaunchScreenColor" width="744" height="1484"/>
+        <image name="ic_appIcon" width="512" height="512"/>
     </resources>
 </document>
