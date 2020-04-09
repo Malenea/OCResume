@@ -12,3 +12,12 @@ import Foundation
 // to default to dark mode in all situations.
 // In short, this is more of a 'Do you want to use light mode?'
 var darkMode: Bool = true
+
+// iOS 13 is used to know the present mode so we can add revelant componants when needed
+let isIOS13: Bool = {
+    if #available(iOS 13.0, *) {
+        return true
+    } else {
+        return false
+    }
+}()

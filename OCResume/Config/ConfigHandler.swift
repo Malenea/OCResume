@@ -36,6 +36,17 @@ class ConfigHandler {
 
 }
 
+// MARK: fetch settings default config
+extension ConfigHandler {
+
+    func getSettingsTitle() -> String {
+        guard let config = config,
+            let presentationTitle = config["settingsTitle"] as? String else { return "" }
+        return presentationTitle
+    }
+
+}
+
 // MARK: fetch presentation default config
 extension ConfigHandler {
 

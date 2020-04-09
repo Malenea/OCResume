@@ -28,6 +28,9 @@
 		FA610118243E687D00860A29 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA610117243E687D00860A29 /* DataHandler.swift */; };
 		FA61011A243E68C400860A29 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = FA610119243E68C400860A29 /* data.json */; };
 		FAA3E424243DD1360016339E /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3E423243DD1360016339E /* Globals.swift */; };
+		FABD66E1243F137000E51D90 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD66E0243F137000E51D90 /* SettingsViewController.swift */; };
+		FABD66E3243F15B800E51D90 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD66E2243F15B800E51D90 /* SettingsViewModel.swift */; };
+		FABD66E5243F180A00E51D90 /* PresentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD66E4243F180A00E51D90 /* PresentedViewController.swift */; };
 		FAE1FEE9243D508500B7FDE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE1FEE8243D508500B7FDE7 /* LaunchScreen.storyboard */; };
 		FAE1FEEC243D564C00B7FDE7 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = FAE1FEEB243D564C00B7FDE7 /* config.json */; };
 		FAE1FEEE243D56DC00B7FDE7 /* ConfigHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE1FEED243D56DC00B7FDE7 /* ConfigHandler.swift */; };
@@ -88,6 +91,9 @@
 		FA610117243E687D00860A29 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		FA610119243E68C400860A29 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		FAA3E423243DD1360016339E /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		FABD66E0243F137000E51D90 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		FABD66E2243F15B800E51D90 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		FABD66E4243F180A00E51D90 /* PresentedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentedViewController.swift; sourceTree = "<group>"; };
 		FAE1FEE8243D508500B7FDE7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAE1FEEB243D564C00B7FDE7 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		FAE1FEED243D56DC00B7FDE7 /* ConfigHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigHandler.swift; sourceTree = "<group>"; };
@@ -261,6 +267,7 @@
 			children = (
 				FA428C45243CCE6600803278 /* MainViewModel.swift */,
 				FAF04875243CE7CA00362C83 /* RootPresentationViewModel.swift */,
+				FABD66E2243F15B800E51D90 /* SettingsViewModel.swift */,
 			);
 			path = "View models";
 			sourceTree = "<group>";
@@ -277,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				FA428C49243CCF8900803278 /* ViewModel.swift */,
+				FABD66E4243F180A00E51D90 /* PresentedViewController.swift */,
 				FA428C47243CCEF400803278 /* ViewController.swift */,
 				FA367792243CBF9E00F69B97 /* Coordinator.swift */,
 			);
@@ -290,6 +298,14 @@
 				FA610119243E68C400860A29 /* data.json */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		FABD66DF243F134C00E51D90 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FABD66E0243F137000E51D90 /* SettingsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		FAE1FEEA243D55D000B7FDE7 /* Config */ = {
@@ -322,6 +338,7 @@
 			children = (
 				FAF0487A243CF64800362C83 /* Main */,
 				FA367798243CC05C00F69B97 /* Root */,
+				FABD66DF243F134C00E51D90 /* Settings */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -568,6 +585,7 @@
 			files = (
 				FA428C4A243CCF8900803278 /* ViewModel.swift in Sources */,
 				FA367797243CBFB500F69B97 /* MainViewController.swift in Sources */,
+				FABD66E1243F137000E51D90 /* SettingsViewController.swift in Sources */,
 				FA367796243CBFB500F69B97 /* RootCoordinator.swift in Sources */,
 				FA207A2F243CDE73004CD143 /* Pulsator.swift in Sources */,
 				FA610118243E687D00860A29 /* DataHandler.swift in Sources */,
@@ -581,9 +599,11 @@
 				FA428C43243CC6FB00803278 /* ProjectPaddings.swift in Sources */,
 				FA428C41243CC62900803278 /* ProjectColors.swift in Sources */,
 				FA367766243CBEC700F69B97 /* OCResume.xcdatamodeld in Sources */,
+				FABD66E5243F180A00E51D90 /* PresentedViewController.swift in Sources */,
 				FAF04876243CE7CA00362C83 /* RootPresentationViewModel.swift in Sources */,
 				FA428C46243CCE6600803278 /* MainViewModel.swift in Sources */,
 				FAE1FEF0243D605300B7FDE7 /* ViewControllerAnimations.swift in Sources */,
+				FABD66E3243F15B800E51D90 /* SettingsViewModel.swift in Sources */,
 				FAF04878243CE93400362C83 /* ProjectFonts.swift in Sources */,
 				FA36775C243CBEC700F69B97 /* AppDelegate.swift in Sources */,
 			);
