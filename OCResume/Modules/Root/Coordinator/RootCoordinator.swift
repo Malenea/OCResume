@@ -53,17 +53,26 @@ extension RootCoordinator {
 extension RootCoordinator {
 
     func moveToSettings() {
-        let settingsViewModel = SettingsViewModel(title: configHandler.getSettingsTitle())
-        presentedViewController = SettingsViewController(baseViewModel: settingsViewModel)
-        if let vc = presentedViewController {
-            vc.coordinator = self
-            navigationController.present(vc, animated: true, completion: nil)
-        }
+        let navController = PresentedSettingsNavigationViewController()
+        navController.setNavigationBarHidden(true, animated: false)
+        let settingsCoordinator = SettingsCoordinator(navigationController: navController)
+        settingsCoordinator.coordinator = self
+        childCoordinators.append(settingsCoordinator)
+        settingsCoordinator.start()
+
+        navigationController.present(settingsCoordinator.navigationController, animated: true, completion: nil)
     }
 
     func dismissSettings() {
-        if let vc = presentedViewController {
-            vc.dismiss(animated: true, completion: nil)
+        for childCoordinator in childCoordinators where childCoordinator is SettingsCoordinator {
+            childCoordinator.navigationController.dismiss(animated: true, completion: nil)
+        }
+        didDismissSettings()
+    }
+
+    func didDismissSettings() {
+        for (index, childCoordinator) in childCoordinators.enumerated() where childCoordinator is SettingsCoordinator {
+            childCoordinators.remove(at: index)
         }
     }
 

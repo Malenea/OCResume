@@ -21,13 +21,15 @@ enum MainState: String {
 // MARK: Overrides and inits
 class MainViewController: BaseViewController {
 
-    // View model
+    // Coordinator and view model
+    weak var coordinator: RootCoordinator?
     private var mainViewModel: MainViewModel? {
         return viewModel as? MainViewModel
     }
 
     // Control variables
     private var currentState: MainState!
+    private var isAnimating: Bool = false
 
     // Views and components
     private var settingsButton: UIButton!
@@ -106,6 +108,7 @@ extension MainViewController {
     }
 
     func setupBottomMenuViewContainerView() {
+        // Creating view
         bottomMenuViewContainerView = UIView()
         bottomMenuViewContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bottomMenuViewContainerView)
@@ -201,7 +204,8 @@ extension MainViewController: ActionButtonDelegate {
     }
 
     func didPress(_ actionButton: ActionButton) {
-        guard let viewModel = mainViewModel else { return }
+        guard let viewModel = mainViewModel, !isAnimating else { return }
+        isAnimating = true
         let item = viewModel.mainMenuButtons[actionButton.tag]
 
         // If the type isn't set, it's an error, do nothing
@@ -213,9 +217,11 @@ extension MainViewController: ActionButtonDelegate {
         let buttonY = containerView.frame.height - bottomMenuViewContainerView.frame.height + actionButton.center.y
         let point = CGPoint(x: actionButton.center.x, y: buttonY)
         containerView.createPulsator(point: point, width: view.frame.height, color: item.color.cgColor, isSolid: true) { [weak self] in
-            self?.currentState = type
-            self?.containerView.backgroundColor = item.color
+            guard let self = self else { return }
+            self.currentState = type
+            self.containerView.backgroundColor = item.color
             actionButton.actionButtonBorderColor = item.color
+            self.isAnimating = false
         }
     }
 

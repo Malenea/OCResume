@@ -1,13 +1,13 @@
 {
 
-    "settingsTitle": "Settings",
+    "settingsTitle": "Paramètres",
 
     "presentationTitle": "Mon titre est beaucoup trop long",
-    "presentationInstructions": "Press anywhere to continue",
+    "presentationInstructions": "Appuyez pour continuer",
 
     "mainMenuSequence": ["home", "profile", "stats"],
     "mainMenuButtons": {
-        "home": "Home",
+        "home": "Accueil",
         "profile": "Profile",
         "stats": "Stats"
     }

@@ -18,8 +18,7 @@ protocol BaseViewControllerDarkModeHandler {
 
 class BaseViewController: UIViewController {
 
-    // Coordinator and view model
-    weak var coordinator: RootCoordinator?
+    // View model
     let viewModel: BaseViewModel
 
     // Ref to native components of the base view

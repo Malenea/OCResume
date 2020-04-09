@@ -15,6 +15,10 @@ public extension UIFont {
         return UIFont.systemFont(ofSize: 40.0, weight: .heavy)
     }
 
+    class var headline: UIFont {
+        return UIFont.systemFont(ofSize: 24.0, weight: .bold)
+    }
+
     class var text: UIFont {
         return UIFont.systemFont(ofSize: 12.0, weight: .regular)
     }
