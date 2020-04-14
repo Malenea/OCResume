@@ -92,7 +92,7 @@ private extension RootPresentationViewController {
         view.addSubview(iconImageView)
 
         // Setting view properties
-        iconImageView.image = UIImage(named: "ic_appIcon")
+        iconImageView.image = UIImage(named: "ic_appIconAlpha")
     }
 
     func setupTitleLabel() {
@@ -155,7 +155,7 @@ private extension RootPresentationViewController {
     }
 
     func setupTitleLabelLayout() {
-        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 24.0).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
     }
@@ -195,7 +195,11 @@ extension RootPresentationViewController {
         // Initial title and instructions labels animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
-            self.iconImageView.fadeOut(with: 0.5) { _ in
+            UIView.animate(withDuration: 0.5, animations: {
+                let heightTranslation = -(self.iconImageView.frame.height / 2) - self.titleLabel.frame.height - 24.0
+                let scale = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                self.iconImageView.transform = scale.translatedBy(x: 0.0, y: heightTranslation)
+            }) { _ in
                 // Fade components in
                 self.titleLabel.fadeIn(with: 0.5)
                 self.instructionsLabel.fadeIn(with: 0.5)

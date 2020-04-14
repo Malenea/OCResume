@@ -19,8 +19,6 @@ final class RootCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
 
-    var presentedViewController: BaseViewController?
-
     // Start function
     func start() {
         let rootPresentationViewModel = RootPresentationViewModel(title: configHandler.getPresentationTitle(), instructions: configHandler.getPresentationInstructions())
