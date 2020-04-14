@@ -303,21 +303,22 @@ extension ActionButton {
         addGestureRecognizer(gesture)
     }
 
+    func animateButton() {
+        // Creating the generator for the impact feedback
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+
+        if isPulsatorActivated {
+            createPulsator()
+        }
+    }
+
     @objc func tappedOnButton(_ sender: UILongPressGestureRecognizer) -> Void {
         if !isActive { return }
 
         if sender.state == .began {
             shrink()
         } else if sender.state == .ended {
-
-            // Creating the generator for the impact feedback
-            let generator = UIImpactFeedbackGenerator(style: .medium)
-            generator.impactOccurred()
-
-            if isPulsatorActivated {
-                createPulsator()
-            }
-
             expand()
 
             let endY = sender.location(in: self).y

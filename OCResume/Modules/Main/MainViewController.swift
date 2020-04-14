@@ -180,8 +180,11 @@ extension MainViewController {
         view.addSubview(settingsButton)
 
         // Setting view properties
+        settingsButton.contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
+        settingsButton.setImage(UIImage(named: "ic_settings"), for: .normal)
+
+        // Setting view properties
         settingsButton.layer.cornerRadius = 24.0
-        settingsButton.backgroundColor = .getComponentColor()
         settingsButton.addTarget(self, action: #selector(tappedOnButton), for: .touchUpInside)
     }
 
@@ -233,7 +236,14 @@ extension MainViewController {
 
     // setting gestures and buttons methods
     @objc func tappedOnButton(_ sender: UIButton) {
-        coordinator?.moveToSettings()
+        UIView.animate(withDuration: 0.5, animations: {
+            sender.transform = CGAffineTransform(rotationAngle: 90.0)
+        }) { [weak self] _ in
+            self?.coordinator?.moveToSettings()
+            UIView.animate(withDuration: 0.5, animations: {
+                sender.transform = .identity
+            })
+        }
     }
 
 }
@@ -254,8 +264,10 @@ extension MainViewController: ActionButtonDelegate {
         // If the type isn't set, it's an error, do nothing
         guard let type = item.type else { return }
 
-        // Reset the buttons borders before assigning the new one
+        // Reset the buttons borders before assigning the new one and lock them
         resetButtons()
+
+        actionButton.animateButton()
 
         UIView.transition(with: titleLabel, duration: 0.5, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.titleLabel.text = item.title
