@@ -45,6 +45,23 @@ extension ConfigHandler {
         return presentationTitle
     }
 
+    func getSettingsButtons() -> [SettingsButton] {
+        guard let config = config,
+            let settingsButtonsOrder = config["settingsSequence"] as? [String],
+            let settingsButtons = config["settingsButtons"] as? [String: String] else { return [] }
+        var settingsButtonsArray: [SettingsButton] = []
+        var colorIndex = 0
+        let colorArray = UIColor.getPastelColors()
+        let colorCount = colorArray.count - 1
+        for (index, key) in settingsButtonsOrder.enumerated() {
+            if let value = settingsButtons[key] {
+                settingsButtonsArray.append(SettingsButton(type: key, index: index, id: key, title: value, color: colorArray[colorIndex]))
+                colorIndex = colorIndex >= colorCount ? 0 : colorIndex + 1
+            }
+        }
+        return settingsButtonsArray
+    }
+
 }
 
 // MARK: fetch presentation default config

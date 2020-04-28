@@ -8,6 +8,15 @@
 
 import UIKit
 
+// MARK: State enum
+enum MainState: String {
+
+    case home
+    case profile
+    case perks
+
+}
+
 struct MainMenuButton {
 
     var id: String

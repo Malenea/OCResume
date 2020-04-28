@@ -1,6 +1,11 @@
 {
 
     "settingsTitle": "Settings",
+    "settingsSequence": ["mode", "language"],
+    "settingsButtons" : {
+        "mode": "Mode",
+        "language": "Language"
+    },
 
     "presentationTitle": "My title is way too long",
     "presentationInstructions": "Press anywhere to continue",

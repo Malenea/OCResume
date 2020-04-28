@@ -162,6 +162,10 @@ public extension CGColor {
         return UIColor.clear.cgColor
     }
 
+    class var white: CGColor {
+        return UIColor.white.cgColor
+    }
+
     class var charcoalGray: CGColor {
         return UIColor.charcoalGray.cgColor
     }

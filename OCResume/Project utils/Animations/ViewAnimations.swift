@@ -30,6 +30,16 @@ public extension UIView {
         layer.borderColor = toColor.cgColor
     }
 
+    func bounce() {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        }) { [weak self] _ in
+            UIView.animate(withDuration: 0.2) {
+                self?.transform = .identity
+            }
+        }
+    }
+
     @discardableResult
     func fadeIn(with duration: TimeInterval, completion: ((Bool)->())? = nil) -> UIView {
         if duration <= .zero {
