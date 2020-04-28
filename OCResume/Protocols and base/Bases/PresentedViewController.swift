@@ -57,13 +57,15 @@ class PresentedBaseViewController: BaseViewController {
 
         // Setting view properties
         closeButton.layer.cornerRadius = 24.0
-        closeButton.backgroundColor = .getComponentColor()
+        closeButton.setImage(UIImage(named: "ic_down")?.maskWithColor(color: .getComponentColor()), for: .normal)
+        let padding = PPaddings.basicPadding
+        closeButton.imageEdgeInsets = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
     }
 
     // Setting each view's layout
     func setupTopHeaderLayout() {
         let topPadding = UIApplication.shared.statusBarFrame.height
-        let height = isIOS13 ? 0.0 : topPadding + 48.0
+        let height = isIOS13 ? 0.0 : topPadding + PPaddings.componentPadding + PPaddings.interPadding
         topHeader.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         topHeader.heightAnchor.constraint(equalToConstant: height).isActive = true
         topHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -72,10 +74,10 @@ class PresentedBaseViewController: BaseViewController {
 
     func setupCloseButtonLayout() {
         let topPadding = UIApplication.shared.statusBarFrame.height
-        closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding).isActive = true
-        closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
-        closeButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
-        closeButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
+        closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding + PPaddings.interPadding).isActive = true
+        closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PPaddings.interPadding).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: PPaddings.componentPadding).isActive = true
+        closeButton.widthAnchor.constraint(equalToConstant: PPaddings.componentPadding).isActive = true
     }
 
 }

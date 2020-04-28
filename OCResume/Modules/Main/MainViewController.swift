@@ -9,17 +9,17 @@
 import Foundation
 import UIKit
 
-// MARK: State enum
-enum MainState: String {
-
-    case home
-    case profile
-    case perks
-    
-}
-
 // MARK: Overrides and inits
-class MainViewController: BaseViewController {
+class MainViewController: BaseViewController, DarkProtocol {
+
+    // Dark protocol
+    func reloadView() {
+        bottomMenuViewContainerView.backgroundColor = .getBackgroundColor()
+        for case let actionButton as ActionButton in bottomMenuView.arrangedSubviews {
+            actionButton.actionButtonBackgroundColor = .getBackgroundColor()
+            actionButton.actionButtonTitleColor = .getComponentColor()
+        }
+    }
 
     // Coordinator and view model
     weak var coordinator: RootCoordinator?
@@ -158,7 +158,7 @@ extension MainViewController {
         bottomMenuView.axis = .horizontal
         bottomMenuView.alignment = .fill
         bottomMenuView.distribution = .fillEqually
-        bottomMenuView.spacing = 8.0
+        bottomMenuView.spacing = PPaddings.basicPadding
         bottomMenuView.layoutMargins = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
 
         let mainMenuButtons = viewModel.mainMenuButtons
@@ -181,7 +181,7 @@ extension MainViewController {
 
         // Setting view properties
         settingsButton.contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
-        settingsButton.setImage(UIImage(named: "ic_settings"), for: .normal)
+        settingsButton.setImage(UIImage(named: "ic_up")?.maskWithColor(color: .charcoalGray), for: .normal)
 
         // Setting view properties
         settingsButton.layer.cornerRadius = 24.0
@@ -197,7 +197,7 @@ extension MainViewController {
     }
 
     func setupBottomMenuViewContainerViewLayout() {
-        let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + 8.0
+        let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + PPaddings.basicPadding
         bottomMenuViewContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         bottomMenuViewContainerView.heightAnchor.constraint(equalToConstant: 64.0 + bottomPadding).isActive = true
         bottomMenuViewContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -213,23 +213,23 @@ extension MainViewController {
     }
 
     func setupTitleLabelLayout() {
-        titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16.0).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16.0).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16.0).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: PPaddings.interPadding).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: PPaddings.interPadding).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -PPaddings.interPadding).isActive = true
     }
 
     func setupBottomMenuViewLayout() {
-        let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + 8.0
-        bottomMenuView.topAnchor.constraint(equalTo: bottomMenuViewContainerView.topAnchor, constant: 16.0).isActive = true
+        let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + PPaddings.basicPadding
+        bottomMenuView.topAnchor.constraint(equalTo: bottomMenuViewContainerView.topAnchor, constant: PPaddings.interPadding).isActive = true
         bottomMenuView.bottomAnchor.constraint(equalTo: bottomMenuViewContainerView.bottomAnchor, constant: -bottomPadding).isActive = true
-        bottomMenuView.leadingAnchor.constraint(equalTo: bottomMenuViewContainerView.leadingAnchor, constant: 16.0).isActive = true
-        bottomMenuView.trailingAnchor.constraint(equalTo: bottomMenuViewContainerView.trailingAnchor, constant: -16.0).isActive = true
+        bottomMenuView.leadingAnchor.constraint(equalTo: bottomMenuViewContainerView.leadingAnchor, constant: PPaddings.interPadding).isActive = true
+        bottomMenuView.trailingAnchor.constraint(equalTo: bottomMenuViewContainerView.trailingAnchor, constant: -PPaddings.interPadding).isActive = true
     }
 
     func setupSettingsButtonLayout() {
-        let topPadding = UIApplication.shared.statusBarFrame.height + 16.0
+        let topPadding = UIApplication.shared.statusBarFrame.height + PPaddings.interPadding
         settingsButton.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding).isActive = true
-        settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+        settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PPaddings.interPadding).isActive = true
         settingsButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
         settingsButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
     }
@@ -237,12 +237,14 @@ extension MainViewController {
     // setting gestures and buttons methods
     @objc func tappedOnButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.5, animations: {
-            sender.transform = CGAffineTransform(rotationAngle: 90.0)
+            sender.transform = CGAffineTransform(rotationAngle: .pi)
         }) { [weak self] _ in
             self?.coordinator?.moveToSettings()
-            UIView.animate(withDuration: 0.5, animations: {
-                sender.transform = .identity
-            })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                UIView.animate(withDuration: 0.5, animations: {
+                    sender.transform = .identity
+                })
+            }
         }
     }
 

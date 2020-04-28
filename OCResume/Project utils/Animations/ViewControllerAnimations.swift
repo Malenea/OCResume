@@ -11,12 +11,16 @@ import UIKit
 // Animations extensions
 extension UINavigationController {
 
-    func fadeTo(_ viewController: UIViewController) {
+    func fadeTo(_ viewController: UIViewController, completion: (()->())? = nil) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.type = CATransitionType.fade
         view.layer.add(transition, forKey: nil)
         pushViewController(viewController, animated: false)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            completion?()
+        }
     }
 
 }

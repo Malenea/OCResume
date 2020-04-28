@@ -82,6 +82,7 @@ public class ActionButton: UIView {
 
     // Public pulsator customisation
     public var isPulsatorActivated: Bool = true
+    public var isPulsatorSolid: Bool = false
     public var pulsatorColor: UIColor = .getPulsatorColor()
 
     // Control and views variables
@@ -256,8 +257,8 @@ extension ActionButton {
     func addLayout() -> Void {
         // Title label constraints
         titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8.0).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8.0).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: PPaddings.basicPadding).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -PPaddings.basicPadding).isActive = true
 
         // Image view constraints
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -287,7 +288,7 @@ extension ActionButton {
         pulsator.repeatCount = 1
         pulsator.autoRemove = true
 
-        pulsator.start()
+        pulsator.start(isSolid: isPulsatorSolid)
 
         pulsatorView.layer.addSublayer(pulsator)
     }
@@ -303,13 +304,17 @@ extension ActionButton {
         addGestureRecognizer(gesture)
     }
 
-    func animateButton() {
+    func animateButton(completion: (()->())? = nil) {
         // Creating the generator for the impact feedback
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
 
         if isPulsatorActivated {
             createPulsator()
+            // The - 0.25 is to avoid any clipping in animation transition
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                completion?()
+            }
         }
     }
 

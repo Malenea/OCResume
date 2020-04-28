@@ -10,7 +10,16 @@ import Foundation
 import UIKit
 
 // MARK: Overrides and inits
-class SettingsViewController: PresentedBaseViewController {
+class SettingsViewController: PresentedBaseViewController, DarkProtocol {
+
+    // Dark protocol
+    func reloadView() {
+        backgroundView.backgroundColor = .getBackgroundColor()
+        titleLabel.textColor = .getComponentColor()
+        for case let cell as SettingsTableViewCell in menuView.visibleCells {
+            cell.reloadView()
+        }
+    }
 
     // Coordinator and view model
     weak var coordinator: SettingsCoordinator?
@@ -20,6 +29,7 @@ class SettingsViewController: PresentedBaseViewController {
 
     // Views and components
     private var titleLabel: UILabel!
+    private var menuView: UITableView!
 
     // Inits
     override init(nibName: String? = nil, bundle: Bundle? = nil, baseViewModel: BaseViewModel) {
@@ -61,11 +71,13 @@ extension SettingsViewController {
     // Setup of additional views
     func setupViews() {
         setupTitleLabel()
+        setupMenuView()
     }
 
     // Setup views' layouts
     func setupLayout() {
         setupTitleLabelLayout()
+        setupMenuViewLayout()
     }
 
     // Setting views
@@ -85,11 +97,41 @@ extension SettingsViewController {
         titleLabel.numberOfLines = 0
     }
 
+    func setupMenuView() {
+        guard let viewModel = settingsViewModel else { return }
+
+        // Creating view
+        menuView = UITableView()
+        menuView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(menuView)
+
+        // Setting view properties
+        menuView.backgroundColor = .clear
+        menuView.separatorStyle = .none
+        menuView.isScrollEnabled = false
+        menuView.delegate = self
+        menuView.dataSource = self
+
+        let identifiers = viewModel.settingsButtons.map { $0.id }
+        for identifier in identifiers {
+            menuView.register(SettingsTableViewCell.self, forCellReuseIdentifier: identifier)
+        }
+    }
+
     // Setting layout
     func setupTitleLabelLayout() {
-        titleLabel.topAnchor.constraint(equalTo: topHeader.bottomAnchor, constant: 16.0).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+        let topPadding = isIOS13 ? 0.0 : UIApplication.shared.statusBarFrame.height
+        titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding + PPaddings.interPadding).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PPaddings.interPadding).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PPaddings.interPadding).isActive = true
+    }
+
+    func setupMenuViewLayout() {
+        let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + PPaddings.interPadding
+        menuView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: (PPaddings.interPadding) * 3.0).isActive = true
+        menuView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomPadding).isActive = true
+        menuView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PPaddings.interPadding).isActive = true
+        menuView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: PPaddings.interPadding).isActive = true
     }
 
     // setting gestures and buttons methods
@@ -98,7 +140,61 @@ extension SettingsViewController {
     }
     
     @objc func tappedOnCloseButton(_ sender: UIButton) {
-        coordinator?.dismiss()
+        sender.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.5, animations: {
+            sender.transform = CGAffineTransform(rotationAngle: .pi)
+        }) { [weak self] _ in
+            self?.coordinator?.dismiss()
+        }
+    }
+
+}
+
+extension SettingsViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? SingleTableViewCell else { return }
+
+        let animation = SingleCellAnimationFactory.makePulseAnimation(duration: 0.5, delayFactor: 0.5, color: cell.color.cgColor)
+        let animator = SingleCellAnimator(animation: animation)
+        animator.animate(cell: cell, at: indexPath, in: tableView)
+    }
+
+}
+
+extension SettingsViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let settingsViewModel = settingsViewModel else { return 0 }
+        return settingsViewModel.settingsButtons.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let settingsViewModel = settingsViewModel else { return UITableViewCell() }
+        let cellItem = settingsViewModel.settingsButtons[indexPath.row]
+        let identifier = cellItem.id
+        if let cell = menuView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? SettingsTableViewCell {
+            cell.bind(viewModel: SettingsTableViewCellViewModel(button: cellItem))
+            cell.delegate = self
+            return cell
+        }
+        return UITableViewCell()
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // Height of cell should be 48.0 + padding 8.0
+        return 56.0
+    }
+
+}
+
+// MARK: Delegate for cell
+extension SettingsViewController: SingleTableViewCellDelegate {
+
+    func didTapOnSingleTableViewCell(_ singleTableViewCell: SingleTableViewCell) {
+        guard let settingsTableViewCell = singleTableViewCell as? SettingsTableViewCell, let button = settingsTableViewCell.settingsTableViewCellViewModel?.button else { return }
+        let cellFrame = singleTableViewCell.convert(singleTableViewCell.bounds, to: view)
+        coordinator?.moveToTest(button: button, color: singleTableViewCell.color, rect: cellFrame)
     }
 
 }

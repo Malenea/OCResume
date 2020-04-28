@@ -34,7 +34,7 @@ class BaseViewController: UIViewController {
 
         setupSelf()
 
-        DDLogInfo("Initiated base view controller")
+        DDLogInfo("💚 Initiated base view controller")
     }
 
     required init?(coder: NSCoder) {
@@ -58,6 +58,7 @@ class BaseViewController: UIViewController {
     }
 
     func setupSelf() {
+        view.clipsToBounds = true
     }
 
     func setupNativeViews() {

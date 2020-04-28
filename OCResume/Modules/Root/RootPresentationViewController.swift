@@ -156,12 +156,12 @@ private extension RootPresentationViewController {
 
     func setupTitleLabelLayout() {
         titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 24.0).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PPaddings.interPadding).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -PPaddings.interPadding).isActive = true
     }
 
     func setupInstructionsLabelLayout() {
-        let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + 16.0
+        let bottomPadding = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0) + PPaddings.interPadding
         instructionsLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomPadding).isActive = true
         instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         instructionsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

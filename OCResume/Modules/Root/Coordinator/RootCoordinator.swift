@@ -42,7 +42,15 @@ extension RootCoordinator {
         let mainViewModel = MainViewModel(mainMenuButtons: configHandler.getMainMenuButtons())
         let vc = MainViewController(baseViewModel: mainViewModel)
         vc.coordinator = self
-        navigationController.fadeTo(vc)
+        navigationController.fadeTo(vc) { [weak self] in
+            self?.navigationController.viewControllers.removeFirst()
+        }
+    }
+    
+    func updateMain() {
+        for case let mainVC as MainViewController in navigationController.viewControllers {
+            mainVC.reloadView()
+        }
     }
 
 }
